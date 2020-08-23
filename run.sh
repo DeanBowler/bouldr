@@ -1,0 +1,1 @@
+ts-node --project tsconfig.server.json scripts/scrape.ts

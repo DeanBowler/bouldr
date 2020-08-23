@@ -1,10 +1,9 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Title = styled.h1`
-  color: red;
-  font-size: 50px;
-`
+  font-size: 5rem;
+`;
 
 export default function Home() {
-  return <Title>My page</Title>
+  return <Title>Hey</Title>;
 }
