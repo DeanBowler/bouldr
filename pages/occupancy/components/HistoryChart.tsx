@@ -29,6 +29,7 @@ const HistoryHeader = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  justify-content: space-between;
 `;
 
 const HistoryTitle = styled.h2`
