@@ -10,6 +10,12 @@
     // "prettier",
     // "prettier/@typescript-eslint"
   ],
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
   "env": {
     "es6": true,
     "browser": true,

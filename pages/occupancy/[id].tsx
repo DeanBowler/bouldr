@@ -1,12 +1,13 @@
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 
 import { Occupancy, DepotLocation } from '../../lib/fetchOccupancies';
 import Donut from '../../components/Donut';
 import useMatch, { Default } from '../../hooks/useMatch';
 
-import HistoryChart from './components/HistoryChart';
+const HistoryChart = dynamic(() => import('./components/HistoryChart'));
 
 const LocationHeading = styled.h1`
   margin: 1rem;
