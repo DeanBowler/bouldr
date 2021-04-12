@@ -3,7 +3,7 @@ import fetch from 'cross-fetch';
 const OCCUPANCY_SITE_URL =
   'https://portal.rockgympro.com/portal/public/4f7e4c65977f6cd9be6d61308c7d7cc2/occupancy';
 
-export type DepotLocation = 'NOT' | 'SHF';
+export type DepotLocation = 'NOT' | 'SHF' | 'BIR';
 
 export interface Occupancy {
   location: string;

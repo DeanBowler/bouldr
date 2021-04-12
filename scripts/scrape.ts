@@ -1,11 +1,13 @@
 import { getOccupancies } from '../lib/fetchOccupancies';
 
+require('dotenv').config();
+
 import cron from 'node-cron';
 
 import { OccupancyCheck } from '../lib/database/occupancyCheck';
 import sequelizeConnection from '../lib/database/sequelizeConnection';
 
-const scrapable = ['NOT', 'SHF'];
+const scrapable = ['NOT', 'SHF', 'BIR'];
 
 async function scrape() {
   const results = await getOccupancies();
@@ -29,8 +31,7 @@ async function scrape() {
 async function start() {
   await sequelizeConnection.sync();
 
-  //await scrape();
-  cron.schedule('*/5 08-23 * * *', async () => await scrape());
+  cron.schedule('*/5 09-23 * * *', async () => await scrape(), { timezone: 'Europe/London' });
 }
 
 start();

@@ -66,6 +66,7 @@ export default function OccupancyLocationPage() {
   const locationName = useMatch(location?.toLocaleUpperCase(), {
     NOT: 'Nottingham',
     SHF: 'Sheffield',
+    BIR: 'Birmingham',
     [Default]: 'Unknown',
   });
 
