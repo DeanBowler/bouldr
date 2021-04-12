@@ -3,11 +3,7 @@
     "target": "es2018",
     "module": "esnext",
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "es2017",
-      "ESNext"
-    ],
+    "lib": ["dom", "es2017", "ESNext"],
     "moduleResolution": "node",
     "allowJs": true,
     "noEmit": true,
@@ -24,12 +20,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

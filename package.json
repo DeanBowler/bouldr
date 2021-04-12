@@ -25,12 +25,13 @@
     ]
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "chalk": "^4.1.0",
     "cross-fetch": "^3.0.5",
     "date-fns": "^2.15.0",
     "dotenv": "^8.2.0",
-    "next": "latest",
-    "node-cron": "^2.0.3",
+    "next": "10.1.3",
+    "node-cron": "^3.0.0",
     "pg": "^8.3.2",
     "pg-hstore": "^2.3.3",
     "ps": "^1.0.0",
@@ -41,10 +42,14 @@
     "react-query": "^2.5.6",
     "recharts": "^1.8.5",
     "sequelize": "^6.3.3",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.3",
     "ts-node": "^8.10.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^26.0.14",
     "@types/node": "14.0.26",
     "@types/node-cron": "^2.0.3",
     "@types/pg": "^7.14.4",
@@ -55,14 +60,18 @@
     "@types/styled-components": "5.1.1",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
+    "babel-jest": "^26.3.0",
     "babel-plugin-styled-components": "^1.10.7",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-react": "^7.20.4",
     "husky": "^4.2.5",
+    "jest": "^26.4.2",
+    "jest-watch-typeahead": "^0.6.1",
     "lint-staged": "^10.2.11",
+    "msw": "^0.21.2",
     "prettier": "^2.0.5",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.6"
   },
   "license": "ISC"
 }

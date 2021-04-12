@@ -20,9 +20,11 @@ const Donut = ({ radius, stroke, progress, text, roundedCorners }: AnimationProg
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
 
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
+  const strokeDashoffset =
+    circumference - ((Number.isNaN(progress) ? 0 : progress) / 100) * circumference;
+
   return (
-    <svg height={radius * 2} width={radius * 2}>
+    <svg height={radius * 2} width={radius * 2} name="donut">
       <circle
         className="circle"
         stroke="#eee"
@@ -48,6 +50,7 @@ const Donut = ({ radius, stroke, progress, text, roundedCorners }: AnimationProg
 
       {text && (
         <text
+          data-testid="donut-text"
           className="text"
           x="50%"
           y="50%"

@@ -22,8 +22,8 @@ import startOfHour from 'date-fns/startOfHour';
 import differenceInDays from 'date-fns/differenceInDays';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import { getOccupancyChecks } from '../../../lib/fetchOccupancyChecks';
-import useMatch, { Default } from '../../../hooks/useMatch';
+import { getOccupancyChecks } from '../lib/fetchOccupancyChecks';
+import useMatch, { Default } from '../hooks/useMatch';
 
 const HistoryHeader = styled.div`
   display: flex;
