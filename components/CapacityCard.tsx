@@ -52,12 +52,16 @@ export function CapacityCard({ location }: CapacityCardProps) {
 
   const percentFull = data ? (data.count / data.capacity) * 100 : 0;
 
-  const donutText = useMatch(status, {
-    loading: 'loading',
-    error: 'error',
-    success: `${data?.count} / ${data?.capacity}`,
-    [Default]: 'unknown',
-  });
+  const donutText = useMatch(
+    status,
+    {
+      loading: 'loading',
+      error: 'error',
+      success: `${data?.count} / ${data?.capacity}`,
+      [Default]: 'unknown',
+    },
+    [status, data?.count, data?.capacity]
+  );
 
   return (
     <Card>

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, DependencyList } from 'react';
 
 export const Default = Symbol('match-default');
 
@@ -10,7 +10,8 @@ export default function useMatch<TInput extends string | number, TResult>(
   value: TInput,
   caseMap:
     | Record<TInput, MaybeFunc<TInput, TResult>>
-    | (Partial<Record<TInput, MaybeFunc<TInput, TResult>>> & Defaulted<MaybeFunc<TInput, TResult>>)
+    | (Partial<Record<TInput, MaybeFunc<TInput, TResult>>> & Defaulted<MaybeFunc<TInput, TResult>>),
+  deps?: DependencyList
 ): TResult {
   return useMemo(() => {
     const val = caseMap[value] ?? (caseMap as any)[Default];
@@ -20,5 +21,5 @@ export default function useMatch<TInput extends string | number, TResult>(
     if (val !== undefined) return val;
 
     throw Error(`Unexpected input: ${value}`);
-  }, [value]);
+  }, deps ?? [value]);
 }
