@@ -15,6 +15,7 @@ const sequelizeConnection = new Sequelize(
     dialectOptions: {
       ssl: process.env.DB_SSL == 'true',
     },
+    timezone: 'Europe/London',
   }
 );
 

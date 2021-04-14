@@ -61,7 +61,7 @@ export default function HistoryChart({ location }: HistoryChartProps) {
       const result = await getOccupancyChecks({
         location,
         from: fromDate,
-        to: setHours(fromDate, 23),
+        to: setHours(fromDate, 22),
       });
 
       return result.map((d) => ({ ...d, ...{ timestamp: parseJSON(d.fetched).getTime() } }));
@@ -93,8 +93,8 @@ export default function HistoryChart({ location }: HistoryChartProps) {
     if (!resolvedData?.length) return undefined;
     const firstDataPoint = startOfHour(resolvedData[0].timestamp);
     return [
-      setHours(firstDataPoint, 8).getTime(),
-      setHours(firstDataPoint, 23).getTime(),
+      setHours(firstDataPoint, 9).getTime(),
+      setHours(firstDataPoint, 22).getTime(),
     ] as AxisDomains;
   }, [resolvedData]);
 

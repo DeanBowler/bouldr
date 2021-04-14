@@ -34,8 +34,10 @@
     "node-cron": "^3.0.0",
     "pg": "^8.3.2",
     "pg-hstore": "^2.3.3",
+    "polished": "^4.1.1",
     "ps": "^1.0.0",
     "query-string": "^6.13.1",
+    "ramda": "^0.27.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hotkeys-hook": "^2.2.2",
@@ -53,6 +55,7 @@
     "@types/node": "14.0.26",
     "@types/node-cron": "^2.0.3",
     "@types/pg": "^7.14.4",
+    "@types/ramda": "^0.27.40",
     "@types/react": "16.9.43",
     "@types/react-dom": "16.9.8",
     "@types/recharts": "^1.8.14",
@@ -71,7 +74,7 @@
     "lint-staged": "^10.2.11",
     "msw": "^0.21.2",
     "prettier": "^2.0.5",
-    "typescript": "^4.0.6"
+    "typescript": "^4.2.4"
   },
   "license": "ISC"
 }

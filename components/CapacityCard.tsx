@@ -18,7 +18,6 @@ const Card = styled.div`
   align-items: center;
 
   padding: 1rem;
-  margin: 1rem auto;
   min-width: 200px;
   border-radius: 5px;
   border: 1px solid #ccc;
