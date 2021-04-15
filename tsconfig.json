@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2018",
+    "baseUrl": "./",
     "module": "esnext",
     "jsx": "preserve",
     "lib": ["dom", "es2017", "ESNext"],
@@ -18,6 +19,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/styled/*": ["styled/*"]
+    },
     "isolatedModules": true
   },
   "exclude": ["node_modules"],
