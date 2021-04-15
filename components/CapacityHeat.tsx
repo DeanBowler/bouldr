@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from 'styled-components';
+import styled, { useTheme } from '@xstyled/styled-components';
 import { useQuery } from 'react-query';
 import { range, apply } from 'ramda';
 import { setLightness } from 'polished';
@@ -8,18 +8,7 @@ import { setLightness } from 'polished';
 import { DepotLocation } from '../lib/fetchOccupancies';
 
 import { getOccupancyHeat } from '../lib/fetchOccupancyHeat';
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 1rem;
-  min-width: 360px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 0 5px 10px -1px rgba(0, 0, 0, 0.1);
-`;
+import { Card } from '@/styled/Card';
 
 export interface CapacityCardProps {
   location: DepotLocation;
@@ -33,11 +22,13 @@ const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 const DayText = styled.text`
   font-size: 8px;
+  fill: text;
 `;
 
 const HourText = styled.text`
   font-size: 8px;
   text-anchor: middle;
+  fill: text;
 `;
 
 const Cell = styled.rect`
@@ -57,6 +48,8 @@ const cellPadding = 1;
 const [from, to] = [9, 22];
 
 export function CapacityHeat({ location }: CapacityCardProps) {
+  const theme = useTheme();
+
   const { data, status } = useQuery(
     ['capacity-heat', location],
     async () => {
@@ -83,14 +76,14 @@ export function CapacityHeat({ location }: CapacityCardProps) {
     null;
 
   const getColor = (day: number, hour: number) => {
-    if (status === 'loading') return '#ccc';
+    if (status === 'loading') return 'rgba(255,255,255,0.25)';
     const count = getCount(day, hour);
     if (!count) return 'transparent';
-    return setLightness(1 - (count / maxCount) * 0.7, '#44a340');
+    return setLightness((count / maxCount) * 0.7, theme.colors.primary);
   };
 
   return (
-    <Card>
+    <Card minWidth={360}>
       <CapacityHeading>Heatmap</CapacityHeading>
       <svg viewBox={`0 0 ${(to - from) * cellWidth + leftGutter} ${7 * cellHeight + topGutter}`}>
         <g transform={`translate(0, ${topGutter + cellHeight / 2})`}>

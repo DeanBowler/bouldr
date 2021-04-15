@@ -7,21 +7,10 @@ import { useQuery } from 'react-query';
 import { DepotLocation, Occupancy } from '../lib/fetchOccupancies';
 import useMatch, { Default } from '../hooks/useMatch';
 import Donut from './Donut';
+import { Card } from '@/styled/Card';
 
 const CapacityHeading = styled.h2`
   margin: 0;
-`;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 1rem;
-  min-width: 200px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 0 5px 10px -1px rgba(0, 0, 0, 0.1);
 `;
 
 const getOccupancy = async (location: DepotLocation): Promise<Occupancy> => {

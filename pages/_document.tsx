@@ -1,5 +1,6 @@
-import Document, { Head, Main, NextScript, DocumentContext } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
+import React from 'react';
+import Document, { Html, Main, NextScript, DocumentContext, Head } from 'next/document';
+import { ServerStyleSheet } from '@xstyled/styled-components';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -28,23 +29,13 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <html lang="en">
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-          <link
-            href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700&display=swap"
-            rel="stylesheet"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
+      <Html lang="en">
+        <Head />
         <body>
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }

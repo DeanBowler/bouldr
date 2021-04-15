@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme, x } from '@xstyled/styled-components';
 
 export interface AnimationProgressProps {
   radius: number;
@@ -15,8 +15,9 @@ const FilledCircle = styled.circle`
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
 `;
-
 const Donut = ({ radius, stroke, progress, text, roundedCorners }: AnimationProgressProps) => {
+  const theme = useTheme();
+
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
 
@@ -25,9 +26,9 @@ const Donut = ({ radius, stroke, progress, text, roundedCorners }: AnimationProg
 
   return (
     <svg height={radius * 2} width={radius * 2} name="donut">
-      <circle
+      <x.circle
         className="circle"
-        stroke="#eee"
+        stroke="rgba(0,0,0,0.25)"
         fill="transparent"
         strokeWidth={stroke}
         r={normalizedRadius}
@@ -37,7 +38,7 @@ const Donut = ({ radius, stroke, progress, text, roundedCorners }: AnimationProg
 
       <FilledCircle
         className="indicator"
-        stroke="#47ae75"
+        stroke={theme.colors.primary}
         fill="transparent"
         strokeWidth={stroke}
         strokeLinecap={roundedCorners ? 'round' : undefined}
@@ -49,7 +50,8 @@ const Donut = ({ radius, stroke, progress, text, roundedCorners }: AnimationProg
       />
 
       {text && (
-        <text
+        <x.text
+          fill="text"
           data-testid="donut-text"
           className="text"
           x="50%"
@@ -57,10 +59,9 @@ const Donut = ({ radius, stroke, progress, text, roundedCorners }: AnimationProg
           textAnchor="middle"
           dominantBaseline="middle"
           fontSize={radius / 4}
-          fill="black"
         >
           {text}
-        </text>
+        </x.text>
       )}
     </svg>
   );

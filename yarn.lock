@@ -1064,6 +1064,35 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
+"@xstyled/core@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@xstyled/core/-/core-2.4.1.tgz#52e1659159e9a21bfb7a6544c56278784c67e7ef"
+  integrity sha512-+lXEP7NSXJ6RqAIK0yfTikr9B9QRLCRED7nP/+seNIV2rRPfkezDHnPDFdKYU5vW28u1pXu2FVHWjF0rRbHFEQ==
+  dependencies:
+    "@xstyled/system" "^2.4.0"
+
+"@xstyled/styled-components@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@xstyled/styled-components/-/styled-components-2.4.1.tgz#51ef35f88f540fa8c9078d44bd8f255fdf6e62f9"
+  integrity sha512-jjFQhdqLNL8hlK7z95SVaJee/Q1iVu/8ukbzwecoAlfsH799najs1LGqdx2vB3QHak41rDx9+2bmAHQt6+5+8Q==
+  dependencies:
+    "@xstyled/core" "^2.4.1"
+    "@xstyled/system" "^2.4.0"
+    "@xstyled/util" "^2.2.3"
+
+"@xstyled/system@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@xstyled/system/-/system-2.4.0.tgz#2eef2fc6f7415a7bf14f4bf8f0baf7c516ca5a94"
+  integrity sha512-tc/Dd+AmMgk7AZW44SHBQ5QqTEeJfqIMcM+h8HnUFHBn7yc+yjOIUK2jX1hl8kk80qOcf30p9JRyWIKZSr1Q+g==
+  dependencies:
+    "@xstyled/util" "^2.2.3"
+    csstype "^3.0.7"
+
+"@xstyled/util@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@xstyled/util/-/util-2.2.3.tgz#d1e094e8dfc0b7bfaf80d7fcbbedb3efda4501ca"
+  integrity sha512-hOtlkeCBJlmvo4eHdNAgv2gJE3djXr1oOdmpBJj1knge0hIZj6kdWpTBp0h/Uzs/8xQndbUdewdfq2cRlHcIZA==
+
 abab@^2.0.3:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
@@ -2112,6 +2141,11 @@ csstype@^2.2.0:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.11.tgz#452f4d024149ecf260a852b025e36562a253ffc5"
   integrity sha512-l8YyEC9NBkSm783PFTvh0FmJy7s5pFKrDp49ZL7zBGX3fWkO+N4EEyan1qqp8cwPLDcD0OSdyY6hAMoxp34JFw==
+
+csstype@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.7.tgz#2a5fb75e1015e84dd15692f71e89a1450290950b"
+  integrity sha512-KxnUB0ZMlnUWCsx2Z8MUsr6qV6ja1w9ArPErJaJaF8a5SOWoHLIszeCTKGRGRgtLgYrs1E8CHkNSP1VZTTPc9g==
 
 d3-array@^1.2.0:
   version "1.2.4"

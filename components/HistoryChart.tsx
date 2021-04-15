@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 
-import styled from 'styled-components';
+import styled, { useTheme } from '@xstyled/styled-components';
 import {
   XAxis,
   Tooltip,
@@ -24,6 +24,8 @@ import { useHotkeys } from 'react-hotkeys-hook';
 
 import { getOccupancyChecks } from '../lib/fetchOccupancyChecks';
 import useMatch, { Default } from '../hooks/useMatch';
+import { Card } from '@/styled/Card';
+import { transparentize } from 'polished';
 
 const HistoryHeader = styled.div`
   display: flex;
@@ -34,10 +36,6 @@ const HistoryHeader = styled.div`
 
 const HistoryTitle = styled.h2`
   margin: 0;
-`;
-
-const HistoryContainer = styled.div`
-  margin: 1rem;
 `;
 
 interface HistoryChartProps {
@@ -74,6 +72,8 @@ export default function HistoryChart({ location }: HistoryChartProps) {
     }
   );
 
+  const theme = useTheme();
+
   const onDateChange = (days: number) => {
     setFromDate((fd) => addDays(fd, days));
   };
@@ -104,7 +104,7 @@ export default function HistoryChart({ location }: HistoryChartProps) {
   );
 
   return (
-    <HistoryContainer>
+    <Card m={3} alignItems="stretch">
       <HistoryHeader>
         <button onClick={() => onDateChange(-1)}>&lt;</button>
         <HistoryTitle>{title}</HistoryTitle>
@@ -115,17 +115,31 @@ export default function HistoryChart({ location }: HistoryChartProps) {
       {status === 'success' && hasRecords && (
         <ResponsiveContainer width="100%" height={400}>
           <AreaChart data={resolvedData}>
-            <XAxis type="number" dataKey="timestamp" tickFormatter={formatScale} domain={domainY} />
-            <YAxis type="number" width={30} domain={domainX} />
-            <Tooltip labelFormatter={formatLabel} />
-            <CartesianGrid stroke="#f0f0f0" />
-            <Area type="monotone" dataKey="count" stroke="#ff7300" fill="#ff730066" />
+            <XAxis
+              type="number"
+              dataKey="timestamp"
+              tickFormatter={formatScale}
+              domain={domainY}
+              tick={{ fill: theme.colors.text }}
+            />
+            <YAxis type="number" width={30} domain={domainX} tick={{ fill: theme.colors.text }} />
+            <Tooltip
+              labelFormatter={formatLabel}
+              contentStyle={{ background: theme.colors.background, borderRadius: 5 }}
+            />
+            <CartesianGrid stroke={transparentize(0.75, theme.colors.text)} />
+            <Area
+              type="monotone"
+              dataKey="count"
+              stroke={theme.colors.secondary}
+              fill={transparentize(0.75, theme.colors.secondary)}
+            />
           </AreaChart>
         </ResponsiveContainer>
       )}
       {status === 'success' && !hasRecords && (
         <div>No data recorded for this center/time period</div>
       )}
-    </HistoryContainer>
+    </Card>
   );
 }
