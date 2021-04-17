@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled, { useTheme } from '@xstyled/styled-components';
+import styled, { useTheme, x } from '@xstyled/styled-components';
 import { useQuery } from 'react-query';
 import { range, apply } from 'ramda';
 import { setLightness } from 'polished';
@@ -12,11 +12,8 @@ import { Card } from '@/styled/Card';
 
 export interface CapacityCardProps {
   location: DepotLocation;
+  className?: string;
 }
-
-const CapacityHeading = styled.h2`
-  margin: 0;
-`;
 
 const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -43,11 +40,12 @@ const cellHeight = 15;
 const topGutter = 15;
 const leftGutter = 20;
 
+const cellRadius = 0;
 const cellPadding = 1;
 
 const [from, to] = [9, 22];
 
-export function CapacityHeat({ location }: CapacityCardProps) {
+export function CapacityHeat({ location, className }: CapacityCardProps) {
   const theme = useTheme();
 
   const { data, status } = useQuery(
@@ -83,17 +81,17 @@ export function CapacityHeat({ location }: CapacityCardProps) {
   };
 
   return (
-    <Card minWidth={360}>
-      <CapacityHeading>Heatmap</CapacityHeading>
+    <Card minWidth={{ xs: 340, sm: 365 }} h="100%" className={className}>
+      <x.h2 mb={3}>Heatmap</x.h2>
       <svg viewBox={`0 0 ${(to - from) * cellWidth + leftGutter} ${7 * cellHeight + topGutter}`}>
-        <g transform={`translate(0, ${topGutter + cellHeight / 2})`}>
+        <g transform={`translate(0, ${topGutter + cellHeight / 1.5})`}>
           {range(0, 7).map((day) => (
             <DayText key={day} transform={`translate(0, ${day * cellHeight})`}>
               {dayLabels[day]}
             </DayText>
           ))}
         </g>
-        <g transform={`translate(${leftGutter + cellWidth / 2}, ${topGutter / 1.5})`}>
+        <g transform={`translate(${leftGutter + cellWidth / 2}, ${topGutter / 2})`}>
           {range(from, to).map((hour) => (
             <HourText key={hour} transform={`translate(${(hour - from) * cellWidth}, 0)`}>
               {hour}
@@ -107,6 +105,7 @@ export function CapacityHeat({ location }: CapacityCardProps) {
                 <Cell
                   width={cellWidth - cellPadding}
                   height={cellHeight - cellPadding}
+                  rx={cellRadius}
                   key={hour}
                   transform={`translate(${(hour - from) * cellHeight + cellPadding / 2}, ${
                     cellPadding / 2

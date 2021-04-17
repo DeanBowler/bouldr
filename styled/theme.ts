@@ -1,19 +1,18 @@
 import { DefaultTheme } from 'styled-components';
 
-import { Theme, defaultTheme } from '@xstyled/system';
+import { hslToColorString, parseToHsl } from 'polished';
+
+import { Theme, defaultTheme, generateHexAlphaVariants } from '@xstyled/system';
+import { pipe } from 'ramda';
+
+const hslToRgb = pipe(parseToHsl, hslToColorString);
 
 interface Colors {
   primary: string;
-  'primary-a10': string;
-  'primary-a20': string;
-  'primary-a30': string;
-  'primary-a50': string;
   secondary: string;
   white: string;
   black: string;
   text: string;
-  'text-a30': string;
-  'text-a50': string;
   background: string;
 }
 
@@ -35,14 +34,8 @@ export interface AppTheme extends Theme {
 const theme: Partial<AppTheme> = {
   ...defaultTheme,
   colors: {
-    primary: 'hsl(140, 50%, 50%)',
-    'primary-a10': 'hsla(150, 40%, 50%, 0.1)',
-    'primary-a20': 'hsla(150, 40%, 50%, 0.2)',
-    'primary-a30': 'hsla(150, 40%, 50%, 0.3)',
-    'primary-a50': 'hsla(150, 40%, 50%, 0.5)',
-    text: 'hsl(180, 8%, 92%)',
-    'text-a30': 'hsla(180, 8%, 92%, 0.26)',
-    'text-a50': 'hsla(180, 8%, 92%, 0.5)',
+    ...generateHexAlphaVariants({ primary: hslToRgb('hsl(140, 50%, 50%)') }),
+    ...generateHexAlphaVariants({ text: hslToRgb('hsl(180, 8%, 92%)') }),
     background: 'hsl(235deg 10% 20%)',
     secondary: 'hsl(290, 65%, 55%)',
     white: 'hsl(180deg 10% 99%)',

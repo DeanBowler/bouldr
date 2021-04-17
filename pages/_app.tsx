@@ -5,7 +5,7 @@ import { AppInitialProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { ThemeProvider } from '@xstyled/styled-components';
+import { Preflight, ThemeProvider } from '@xstyled/styled-components';
 import theme from '@/styled/theme';
 import { Layout } from '@/components/Layout';
 
@@ -32,6 +32,7 @@ export default function App({
         />
       </Head>
 
+      <Preflight />
       <ThemeProvider theme={theme}>
         <Layout>
           <Component {...pageProps} key={router.route} />

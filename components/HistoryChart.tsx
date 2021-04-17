@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
-import styled, { useTheme } from '@xstyled/styled-components';
+import styled, { x, useTheme } from '@xstyled/styled-components';
 import {
   XAxis,
   Tooltip,
@@ -14,6 +14,7 @@ import {
 } from 'recharts';
 import { usePaginatedQuery } from 'react-query';
 
+import { transparentize } from 'polished';
 import setHours from 'date-fns/setHours';
 import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
@@ -21,11 +22,12 @@ import parseJSON from 'date-fns/parseJSON';
 import startOfHour from 'date-fns/startOfHour';
 import differenceInDays from 'date-fns/differenceInDays';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-import { getOccupancyChecks } from '../lib/fetchOccupancyChecks';
-import useMatch, { Default } from '../hooks/useMatch';
+import { getOccupancyChecks } from '@/lib/fetchOccupancyChecks';
+import useMatch, { Default } from '@/hooks/useMatch';
 import { Card } from '@/styled/Card';
-import { transparentize } from 'polished';
+import { IconButton } from '@/components/IconButton';
 
 const HistoryHeader = styled.div`
   display: flex;
@@ -34,12 +36,9 @@ const HistoryHeader = styled.div`
   justify-content: space-between;
 `;
 
-const HistoryTitle = styled.h2`
-  margin: 0;
-`;
-
 interface HistoryChartProps {
   location: string | undefined;
+  className?: string;
 }
 
 type AxisDomains = [AxisDomain, AxisDomain];
@@ -49,7 +48,7 @@ const formatLabel: LabelFormatter = (date: string | number) =>
 
 const formatScale = (date: number) => format(new Date(date), 'HH:mm');
 
-export default function HistoryChart({ location }: HistoryChartProps) {
+export default function HistoryChart({ location, className }: HistoryChartProps) {
   const [fromDate, setFromDate] = useState(setHours(startOfHour(new Date()), 8));
 
   const { resolvedData, status } = usePaginatedQuery(
@@ -78,8 +77,14 @@ export default function HistoryChart({ location }: HistoryChartProps) {
     setFromDate((fd) => addDays(fd, days));
   };
 
-  useHotkeys('left', () => onDateChange(-1));
-  useHotkeys('right', () => onDateChange(1));
+  useHotkeys('left', (event) => {
+    onDateChange(-1);
+    event.preventDefault();
+  });
+  useHotkeys('right', (event) => {
+    onDateChange(1);
+    event.preventDefault();
+  });
 
   const title = useMatch(differenceInDays(new Date(), fromDate), {
     0: 'Today',
@@ -104,14 +109,18 @@ export default function HistoryChart({ location }: HistoryChartProps) {
   );
 
   return (
-    <Card m={3} alignItems="stretch">
+    <Card alignItems="stretch" className={className}>
       <HistoryHeader>
-        <button onClick={() => onDateChange(-1)}>&lt;</button>
-        <HistoryTitle>{title}</HistoryTitle>
-        <button onClick={() => onDateChange(+1)}>&gt;</button>
+        <IconButton icon={FiChevronLeft} iconSize="3xl" onClick={() => onDateChange(-1)} />
+        <x.h2 userSelect="none">{title}</x.h2>
+        <IconButton icon={FiChevronRight} iconSize="3xl" onClick={() => onDateChange(+1)} />
       </HistoryHeader>
 
-      {status === 'error' && <div>Failed to fetch history</div>}
+      {status === 'error' && (
+        <x.div textAlign="center" mt={4} mb={5}>
+          Failed to fetch history
+        </x.div>
+      )}
       {status === 'success' && hasRecords && (
         <ResponsiveContainer width="100%" height={400}>
           <AreaChart data={resolvedData}>
@@ -125,7 +134,10 @@ export default function HistoryChart({ location }: HistoryChartProps) {
             <YAxis type="number" width={30} domain={domainX} tick={{ fill: theme.colors.text }} />
             <Tooltip
               labelFormatter={formatLabel}
-              contentStyle={{ background: theme.colors.background, borderRadius: 5 }}
+              contentStyle={{
+                background: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: 5,
+              }}
             />
             <CartesianGrid stroke={transparentize(0.75, theme.colors.text)} />
             <Area
@@ -138,7 +150,9 @@ export default function HistoryChart({ location }: HistoryChartProps) {
         </ResponsiveContainer>
       )}
       {status === 'success' && !hasRecords && (
-        <div>No data recorded for this center/time period</div>
+        <x.div textAlign="center" mt={4} mb={5} userSelect="none">
+          No data recorded for this center/time period
+        </x.div>
       )}
     </Card>
   );

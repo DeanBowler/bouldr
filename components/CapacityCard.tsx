@@ -1,17 +1,13 @@
 import React from 'react';
 
-import styled from 'styled-components';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { x } from '@xstyled/styled-components';
 
-import { DepotLocation, Occupancy } from '../lib/fetchOccupancies';
-import useMatch, { Default } from '../hooks/useMatch';
-import Donut from './Donut';
+import { DepotLocation, Occupancy } from '@/lib/fetchOccupancies';
+import useMatch, { Default } from '@/hooks/useMatch';
 import { Card } from '@/styled/Card';
-
-const CapacityHeading = styled.h2`
-  margin: 0;
-`;
+import Donut from '@/components/Donut';
 
 const getOccupancy = async (location: DepotLocation): Promise<Occupancy> => {
   const response = await axios.get<Occupancy>(`/api/occupancy/${location}`);
@@ -20,9 +16,10 @@ const getOccupancy = async (location: DepotLocation): Promise<Occupancy> => {
 
 export interface CapacityCardProps {
   location: DepotLocation;
+  className?: string;
 }
 
-export function CapacityCard({ location }: CapacityCardProps) {
+export function CapacityCard({ location, className }: CapacityCardProps) {
   const { data, status } = useQuery(
     ['occupancy', location],
     async () => {
@@ -52,8 +49,8 @@ export function CapacityCard({ location }: CapacityCardProps) {
   );
 
   return (
-    <Card>
-      <CapacityHeading>Current</CapacityHeading>
+    <Card className={className}>
+      <x.h2 m={0}>Current</x.h2>
       <Donut
         data-testid="capacity-donut"
         progress={percentFull}

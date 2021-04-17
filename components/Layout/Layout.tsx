@@ -37,6 +37,22 @@ const GlobalStyle = createGlobalStyle`
   li {
     margin: 1rem 0;
   }
+
+  h1 {
+    font-size: 4xl;
+  }
+
+  h2 {
+    font-size: 2xl;
+  }
+
+  h3 {
+    font-size: xl;
+  }
+
+  h4 {
+    font-size: lg;
+  }
 `;
 
 const Container = styled.div`
@@ -53,6 +69,7 @@ const Container = styled.div`
   ::before {
     content: '';
     z-index: -1;
+    background-image: url('/images/curtain.svg');
     background-attachment: fixed;
     position: fixed;
     top: 0;
@@ -60,27 +77,7 @@ const Container = styled.div`
     right: 0;
     left: 0;
     pointer-events: none;
-    opacity: 0.75;
-  }
-
-  ul {
-    padding: 0px;
-    margin: 0px;
-    list-style: none;
-  }
-
-  ul li {
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 10px;
-  }
-
-  ul li::before {
-    content: '▹';
-    position: absolute;
-    left: 0px;
-    font-size: 3xl;
-    color: primary;
+    opacity: 0.1;
   }
 `;
 

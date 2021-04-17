@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import styled, { x } from '@xstyled/styled-components';
 
-import { DepotLocation } from '../../lib/fetchOccupancies';
-import useMatch, { Default } from '../../hooks/useMatch';
-import { CapacityCard } from '../../components/CapacityCard';
-import { CapacityHeat } from '../../components/CapacityHeat';
+import { DepotLocation } from '@/lib/fetchOccupancies';
+import useMatch, { Default } from '@/hooks/useMatch';
+import { CapacityCard } from '@/components/CapacityCard';
+import { CapacityHeat } from '@/components/CapacityHeat';
 
-const HistoryChart = dynamic(() => import('../../components/HistoryChart'));
+const HistoryChart = dynamic(() => import('@/components/HistoryChart'));
 
 const LocationHeading = styled.h1`
   margin: 1rem;
@@ -20,6 +20,7 @@ const CapacityContainer = styled.div`
   max-width: 1024px;
   width: 100%;
   margin: 0 auto;
+  padding: 1;
 `;
 
 // const ThingsContainer = styled.box`
@@ -52,19 +53,17 @@ export default function OccupancyLocationPage() {
       </Head>
       <CapacityContainer>
         <LocationHeading>Depot {locationName}</LocationHeading>
-        <x.div
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-          flexWrap="wrap"
-          spaceX={2}
-          m={3}
-        >
-          <CapacityCard location={location} />
-          <CapacityHeat location={location} />
+        <x.div display="flex" flexDirection={{ xs: 'column', md: 'row' }} justifyContent="center">
+          <x.div m={2} flexGrow={{ xs: 1, md: 0 }}>
+            <CapacityCard location={location} />
+          </x.div>
+          <x.div m={2} flexGrow={{ xs: 1, md: 0 }}>
+            <CapacityHeat location={location} />
+          </x.div>
         </x.div>
-        <HistoryChart location={query.id as string} />
+        <x.div m={2}>
+          <HistoryChart location={query.id as string} />
+        </x.div>
       </CapacityContainer>
     </>
   );
