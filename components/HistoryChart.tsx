@@ -6,12 +6,12 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
-  LabelFormatter,
   YAxis,
   Area,
   AreaChart,
-  AxisDomain,
 } from 'recharts';
+import { AxisDomain } from 'recharts/types/util/types';
+
 import { usePaginatedQuery } from 'react-query';
 
 import { transparentize } from 'polished';
@@ -41,10 +41,7 @@ interface HistoryChartProps {
   className?: string;
 }
 
-type AxisDomains = [AxisDomain, AxisDomain];
-
-const formatLabel: LabelFormatter = (date: string | number) =>
-  format(parseJSON(date), 'dd/MM/yy HH:mm:ss');
+const formatLabel = (date: string | number) => format(parseJSON(date), 'dd/MM/yy HH:mm:ss');
 
 const formatScale = (date: number) => format(new Date(date), 'HH:mm');
 
@@ -100,11 +97,11 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
     return [
       setHours(firstDataPoint, 9).getTime(),
       setHours(firstDataPoint, 22).getTime(),
-    ] as AxisDomains;
+    ] as AxisDomain;
   }, [resolvedData]);
 
   const domainX = useMemo(
-    () => (resolvedData?.length ? ([0, resolvedData[0].capacity] as AxisDomains) : undefined),
+    () => (resolvedData?.length ? ([0, resolvedData[0].capacity] as AxisDomain) : undefined),
     [resolvedData]
   );
 
