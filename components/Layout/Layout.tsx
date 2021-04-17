@@ -1,7 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import styled, { createGlobalStyle } from '@xstyled/styled-components';
-import { th } from '@xstyled/styled-components';
+import styled, { createGlobalStyle, th } from '@xstyled/styled-components';
 
 interface LayoutProps {
   children: React.ReactNode;

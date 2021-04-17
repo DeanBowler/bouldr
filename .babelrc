@@ -4,7 +4,17 @@
       "plugins": [
         [
           "babel-plugin-styled-components",
-          { "ssr": true, "displayName": true, "preprocess": false }
+          {
+            "ssr": true,
+            "displayName": true,
+            "preprocess": false,
+            "topLevelImportPaths": [
+              "@xstyled/styled-components",
+              "@xstyled/styled-components/no-tags",
+              "@xstyled/styled-components/native",
+              "@xstyled/styled-components/primitives"
+            ]
+          }
         ]
       ],
       "presets": ["next/babel"]
@@ -13,7 +23,17 @@
       "plugins": [
         [
           "babel-plugin-styled-components",
-          { "ssr": true, "displayName": true, "preprocess": false }
+          {
+            "ssr": true,
+            "displayName": true,
+            "preprocess": false,
+            "topLevelImportPaths": [
+              "@xstyled/styled-components",
+              "@xstyled/styled-components/no-tags",
+              "@xstyled/styled-components/native",
+              "@xstyled/styled-components/primitives"
+            ]
+          }
         ]
       ],
       "presets": ["next/babel"]
@@ -23,6 +43,19 @@
     }
   },
   "plugins": [
-    ["babel-plugin-styled-components", { "ssr": true, "displayName": true, "preprocess": false }]
+    [
+      "babel-plugin-styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false,
+        "topLevelImportPaths": [
+          "@xstyled/styled-components",
+          "@xstyled/styled-components/no-tags",
+          "@xstyled/styled-components/native",
+          "@xstyled/styled-components/primitives"
+        ]
+      }
+    ]
   ]
 }
