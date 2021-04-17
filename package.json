@@ -42,8 +42,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hotkeys-hook": "^2.2.2",
+    "react-icons": "^4.2.0",
     "react-query": "^2.5.6",
-    "recharts": "^1.8.5",
+    "recharts": "^2.0.9",
     "sequelize": "^6.3.3",
     "styled-components": "^5.2.3",
     "ts-node": "^8.10.2"
