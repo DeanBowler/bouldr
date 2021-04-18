@@ -145,7 +145,7 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
               labelFormatter={formatLabel}
               contentStyle={{
                 background: 'rgba(0, 0, 0, 0.5)',
-                borderRadius: 5,
+                borderRadius: 10,
               }}
             />
             <CartesianGrid stroke={transparentize(0.75, theme.colors.text)} />

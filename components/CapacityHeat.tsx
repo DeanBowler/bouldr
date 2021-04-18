@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 
-import styled, { useTheme, x } from '@xstyled/styled-components';
+import styled, { x, th } from '@xstyled/styled-components';
 import { useQuery } from 'react-query';
-import { range, apply } from 'ramda';
-import { setLightness } from 'polished';
+import { apply } from 'ramda';
 
 import { DepotLocation } from '../lib/fetchOccupancies';
 
 import { getOccupancyHeat } from '../lib/fetchOccupancyHeat';
 import { Card } from '@/styled/Card';
+import { usePopper } from 'react-popper';
+import { Heatmap } from './Heatmap';
 
 export interface CapacityCardProps {
   location: DepotLocation;
@@ -17,37 +18,28 @@ export interface CapacityCardProps {
 
 const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const DayText = styled.text`
-  font-size: 8px;
-  fill: text;
-`;
-
-const HourText = styled.text`
-  font-size: 8px;
-  text-anchor: middle;
-  fill: text;
-`;
-
-const Cell = styled.rect`
-  transition: fill 600ms ease-in-out;
+const TooltipContainer = styled.div`
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid ${th.color('text')};
+  border-radius: 10;
+  padding: 1rem;
 `;
 
 const maxInList = apply(Math.max);
 
-const cellWidth = 15;
-const cellHeight = 15;
+const xDomain = [9, 22] as [number, number];
+const yDomain = [0, 7] as [number, number];
 
-const topGutter = 15;
-const leftGutter = 20;
+const yAxisLabelFormatter = (v: number) => dayLabels[v];
 
-const cellRadius = 0;
-const cellPadding = 1;
-
-const [from, to] = [9, 22];
+interface SelectedCell {
+  day: number;
+  hour: number;
+  count: number | null;
+}
 
 export function CapacityHeat({ location, className }: CapacityCardProps) {
-  const theme = useTheme();
-
   const { data, isLoading } = useQuery(
     ['capacity-heat', location],
     async () => {
@@ -63,60 +55,73 @@ export function CapacityHeat({ location, className }: CapacityCardProps) {
     }
   );
 
-  const counts = data?.map((d) => d.average_count) ?? [];
+  const [hovered, setHovered] = useState<[SVGRectElement, SelectedCell] | null>(null);
+  const [popper, setPopper] = useState<HTMLDivElement | null>(null);
 
-  const maxCount = maxInList(counts);
+  const [hoveredEl, hoveredCell] = hovered ?? [null, null];
+
+  const { styles, attributes } = usePopper(hoveredEl, popper, {
+    placement: 'right-start',
+    modifiers: [
+      {
+        name: 'offset',
+        options: { offset: [-10, 10] },
+      },
+    ],
+  });
+
+  const counts = useMemo(() => data?.map((d) => d.average_count) ?? [], [data]);
+  const maxCount = useMemo(() => maxInList(counts), [counts]);
 
   const fuckingSundays = (day: number) => (day === 0 ? 6 : day - 1);
 
-  const getCount = (day: number, hour: number) =>
-    data?.find((d) => fuckingSundays(d.day_of_week) === day && d.hour === hour)?.average_count ??
-    null;
+  const getCount = useCallback(
+    (day: number, hour: number) =>
+      data?.find((d) => fuckingSundays(d.day_of_week) === day && d.hour === hour)?.average_count ??
+      null,
+    [data]
+  );
 
-  const getColor = (day: number, hour: number) => {
-    if (isLoading) return 'rgba(255,255,255,0.25)';
-    const count = getCount(day, hour);
-    if (!count) return 'transparent';
-    return setLightness((count / maxCount) * 0.65, theme.colors.primary);
-  };
+  const hoverTimeout = useRef<number>();
+  const handleCellMouseOver = useCallback(
+    (e: React.MouseEvent<SVGRectElement>, day: number, hour: number) => {
+      if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+      setHovered([e.currentTarget, { day, hour, count: getCount(day, hour) }]);
+    },
+    [setHovered, getCount]
+  );
+
+  const handleCellMouseLeave = useCallback(
+    () => (hoverTimeout.current = setTimeout(() => setHovered(null), 500)),
+    [setHovered]
+  );
 
   return (
     <Card minWidth={{ xs: 340, sm: 365 }} h="100%" className={className}>
       <x.h2 mb={3}>Heatmap</x.h2>
-      <svg viewBox={`0 0 ${(to - from) * cellWidth + leftGutter} ${7 * cellHeight + topGutter}`}>
-        <g transform={`translate(0, ${topGutter + cellHeight / 1.5})`}>
-          {range(0, 7).map((day) => (
-            <DayText key={day} transform={`translate(0, ${day * cellHeight})`}>
-              {dayLabels[day]}
-            </DayText>
-          ))}
-        </g>
-        <g transform={`translate(${leftGutter + cellWidth / 2}, ${topGutter / 2})`}>
-          {range(from, to).map((hour) => (
-            <HourText key={hour} transform={`translate(${(hour - from) * cellWidth}, 0)`}>
-              {hour}
-            </HourText>
-          ))}
-        </g>
-        <g transform={`translate(${leftGutter}, ${topGutter})`}>
-          {range(0, 7).map((day) => (
-            <g key={day} transform={`translate(0, ${day * cellHeight})`}>
-              {range(from, to).map((hour) => (
-                <Cell
-                  width={cellWidth - cellPadding}
-                  height={cellHeight - cellPadding}
-                  rx={cellRadius}
-                  key={hour}
-                  transform={`translate(${(hour - from) * cellHeight + cellPadding / 2}, ${
-                    cellPadding / 2
-                  })`}
-                  fill={getColor(day, hour)}
-                />
-              ))}
-            </g>
-          ))}
-        </g>
-      </svg>
+      <Heatmap
+        data={data}
+        xAxisDomain={xDomain}
+        yAxisDomain={yDomain}
+        getValue={getCount}
+        onMouseOver={handleCellMouseOver}
+        onMouseLeave={handleCellMouseLeave}
+        yAxisLabelFormatter={yAxisLabelFormatter}
+        maxValue={maxCount}
+        isLoading={isLoading}
+      />
+      {Boolean(hoveredCell?.count) && (
+        <TooltipContainer
+          ref={(ref) => setPopper(ref)}
+          style={styles.popper}
+          {...attributes.popper}
+        >
+          {dayLabels[hoveredCell?.day ?? 0]} {hoveredCell?.hour}:00
+          <x.div mt={2} fontSize="xl">
+            {hoveredCell?.count}
+          </x.div>
+        </TooltipContainer>
+      )}
     </Card>
   );
 }
