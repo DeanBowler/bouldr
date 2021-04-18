@@ -10,10 +10,6 @@ import { CapacityHeat } from '@/components/CapacityHeat';
 
 const HistoryChart = dynamic(() => import('@/components/HistoryChart'));
 
-const LocationHeading = styled.h1`
-  margin: 1rem;
-`;
-
 const CapacityContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,17 +19,8 @@ const CapacityContainer = styled.div`
   padding: 1;
 `;
 
-// const ThingsContainer = styled.box`
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: space-around;
-//   flex-wrap: wrap;
-//   margin: 2rem 0;
-// `;
-
 export default function OccupancyLocationPage() {
-  const { query } = useRouter();
+  const { query, isReady } = useRouter();
 
   const location = query.id as DepotLocation;
 
@@ -41,18 +28,18 @@ export default function OccupancyLocationPage() {
     NOT: 'Nottingham',
     SHF: 'Sheffield',
     BIR: 'Birmingham',
-    [Default]: 'Unknown',
+    [Default]: '',
   });
 
-  if (!query.id) return null;
+  if (!isReady) return null;
 
   return (
     <>
-      <Head>
-        <title>Depot {locationName} Occupancy | Bouldr</title>
-      </Head>
+      <Head>{location && <title>Depot {locationName} Occupancy | Bouldr</title>}</Head>
       <CapacityContainer>
-        <LocationHeading>Depot {locationName}</LocationHeading>
+        <x.h1 m={3} mt={4} fontSize={{ xs: '2xl', md: '3xl' }}>
+          Depot {locationName}
+        </x.h1>
         <x.div display="flex" flexDirection={{ xs: 'column', md: 'row' }} justifyContent="center">
           <x.div m={2} flexGrow={{ xs: 1, md: 0 }}>
             <CapacityCard location={location} />

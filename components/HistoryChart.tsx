@@ -21,6 +21,7 @@ import format from 'date-fns/format';
 import parseJSON from 'date-fns/parseJSON';
 import startOfHour from 'date-fns/startOfHour';
 import differenceInDays from 'date-fns/differenceInDays';
+import isToday from 'date-fns/isToday';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
@@ -51,7 +52,7 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
   const { resolvedData, status } = usePaginatedQuery(
     ['occupancyChecks', location, fromDate],
     async () => {
-      if (typeof location !== 'string') return;
+      if (typeof location !== 'string' || !location.length) return;
       const result = await getOccupancyChecks({
         location,
         from: fromDate,
@@ -65,6 +66,7 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
       refetchInterval: 120000,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: false,
+      enabled: location?.length,
     }
   );
 
@@ -78,10 +80,15 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
     onDateChange(-1);
     event.preventDefault();
   });
-  useHotkeys('right', (event) => {
-    onDateChange(1);
-    event.preventDefault();
-  });
+  useHotkeys(
+    'right',
+    (event) => {
+      if (isToday(fromDate)) return;
+      onDateChange(1);
+      event.preventDefault();
+    },
+    [fromDate]
+  );
 
   const title = useMatch(differenceInDays(new Date(), fromDate), {
     0: 'Today',
@@ -110,7 +117,12 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
       <HistoryHeader>
         <IconButton icon={FiChevronLeft} iconSize="3xl" onClick={() => onDateChange(-1)} />
         <x.h2 userSelect="none">{title}</x.h2>
-        <IconButton icon={FiChevronRight} iconSize="3xl" onClick={() => onDateChange(+1)} />
+        <IconButton
+          icon={FiChevronRight}
+          iconSize="3xl"
+          onClick={() => onDateChange(+1)}
+          disabled={isToday(fromDate)}
+        />
       </HistoryHeader>
 
       {status === 'error' && (

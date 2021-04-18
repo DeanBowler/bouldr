@@ -48,7 +48,7 @@ const [from, to] = [9, 22];
 export function CapacityHeat({ location, className }: CapacityCardProps) {
   const theme = useTheme();
 
-  const { data, status } = useQuery(
+  const { data, isLoading } = useQuery(
     ['capacity-heat', location],
     async () => {
       if (typeof location !== 'string') return;
@@ -74,10 +74,10 @@ export function CapacityHeat({ location, className }: CapacityCardProps) {
     null;
 
   const getColor = (day: number, hour: number) => {
-    if (status === 'loading') return 'rgba(255,255,255,0.25)';
+    if (isLoading) return 'rgba(255,255,255,0.25)';
     const count = getCount(day, hour);
     if (!count) return 'transparent';
-    return setLightness((count / maxCount) * 0.7, theme.colors.primary);
+    return setLightness((count / maxCount) * 0.65, theme.colors.primary);
   };
 
   return (

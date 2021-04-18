@@ -26,6 +26,8 @@ export default function App({
           href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;400;500;700&display=swap"
           rel="stylesheet"
         />
+        <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker" rel="stylesheet" />
         <link
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital@0;1&display=swap"
           rel="stylesheet"

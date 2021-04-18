@@ -32,6 +32,7 @@ export function CapacityCard({ location, className }: CapacityCardProps) {
       refetchInterval: 120000,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: false,
+      enabled: location?.length,
     }
   );
 
@@ -43,7 +44,7 @@ export function CapacityCard({ location, className }: CapacityCardProps) {
       loading: 'loading',
       error: 'error',
       success: `${data?.count} / ${data?.capacity}`,
-      [Default]: 'unknown',
+      [Default]: '',
     },
     [status, data?.count, data?.capacity]
   );

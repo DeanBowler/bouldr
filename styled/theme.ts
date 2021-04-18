@@ -43,7 +43,7 @@ const theme: Partial<AppTheme> = {
   },
   fonts: {
     normal: 'Raleway',
-    cursive: 'Pacifico',
+    cursive: 'Permanent Marker',
     monospace: 'monospace',
   },
   fontWeights: {

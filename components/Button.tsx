@@ -19,6 +19,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         m={0}
         focusRingColor="primary-a40"
         focusOutline="none"
+        disabledOpacity={0.5}
+        disabledBackgroundColor="transparent"
         {...rest}
         ref={ref}
       >

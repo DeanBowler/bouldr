@@ -2,6 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import styled, { createGlobalStyle, th } from '@xstyled/styled-components';
 
+import { SiteHeader } from './SiteHeader';
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -87,6 +89,7 @@ export function Layout({ children }: LayoutProps) {
         <Head>
           <title>Bouldr</title>
         </Head>
+        <SiteHeader />
         {children}
       </Container>
       <GlobalStyle />
