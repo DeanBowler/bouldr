@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import { AxisDomain } from 'recharts/types/util/types';
 
-import { usePaginatedQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
 import { transparentize } from 'polished';
 import setHours from 'date-fns/setHours';
@@ -49,7 +49,7 @@ const formatScale = (date: number) => format(new Date(date), 'HH:mm');
 export default function HistoryChart({ location, className }: HistoryChartProps) {
   const [fromDate, setFromDate] = useState(setHours(startOfHour(new Date()), 8));
 
-  const { resolvedData, status } = usePaginatedQuery(
+  const { data, status } = useQuery(
     ['occupancyChecks', location, fromDate],
     async () => {
       if (typeof location !== 'string' || !location.length) return;
@@ -66,7 +66,8 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
       refetchInterval: 120000,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: false,
-      enabled: location?.length,
+      enabled: Boolean(location?.length),
+      keepPreviousData: true,
     }
   );
 
@@ -96,20 +97,20 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
     [Default]: () => format(fromDate, 'iiii	do MMMM'),
   });
 
-  const hasRecords = Boolean(resolvedData?.length);
+  const hasRecords = Boolean(data?.length);
 
   const domainY = useMemo(() => {
-    if (!resolvedData?.length) return undefined;
-    const firstDataPoint = startOfHour(resolvedData[0].timestamp);
+    if (!data?.length) return undefined;
+    const firstDataPoint = startOfHour(data[0].timestamp);
     return [
       setHours(firstDataPoint, 9).getTime(),
       setHours(firstDataPoint, 22).getTime(),
     ] as AxisDomain;
-  }, [resolvedData]);
+  }, [data]);
 
   const domainX = useMemo(
-    () => (resolvedData?.length ? ([0, resolvedData[0].capacity] as AxisDomain) : undefined),
-    [resolvedData]
+    () => (data?.length ? ([0, data[0].capacity] as AxisDomain) : undefined),
+    [data]
   );
 
   return (
@@ -132,7 +133,7 @@ export default function HistoryChart({ location, className }: HistoryChartProps)
       )}
       {status === 'success' && hasRecords && (
         <ResponsiveContainer width="100%" height={400}>
-          <AreaChart data={resolvedData}>
+          <AreaChart data={data}>
             <XAxis
               type="number"
               dataKey="timestamp"

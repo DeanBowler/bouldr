@@ -32,7 +32,7 @@ export function CapacityCard({ location, className }: CapacityCardProps) {
       refetchInterval: 120000,
       refetchOnWindowFocus: true,
       refetchIntervalInBackground: false,
-      enabled: location?.length,
+      enabled: Boolean(location?.length),
     }
   );
 

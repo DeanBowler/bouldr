@@ -4,6 +4,8 @@ import { NextComponentType, NextPageContext } from 'next';
 import { AppInitialProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { Preflight, ThemeProvider } from '@xstyled/styled-components';
 import theme from '@/styled/theme';
@@ -16,6 +18,11 @@ export default function App({
   Component: NextComponentType<NextPageContext, unknown, Record<string, unknown>>;
 }) {
   const router = useRouter();
+
+  const queryClientRef = React.useRef<QueryClient>();
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient();
+  }
 
   return (
     <>
@@ -37,7 +44,10 @@ export default function App({
       <Preflight />
       <ThemeProvider theme={theme}>
         <Layout>
-          <Component {...pageProps} key={router.route} />
+          <QueryClientProvider client={queryClientRef.current}>
+            <Component {...pageProps} key={router.route} />
+          </QueryClientProvider>
+          <ReactQueryDevtools />
         </Layout>
       </ThemeProvider>
     </>
