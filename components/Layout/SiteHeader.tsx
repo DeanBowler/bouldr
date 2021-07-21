@@ -1,5 +1,7 @@
-import { gradientShift } from '@/styled/keyframes';
 import styled, { th, x } from '@xstyled/styled-components';
+import Link from 'next/link';
+
+import { gradientShift } from '@/styled/keyframes';
 import { BouldrIcon } from '../icons/BouldrIcon';
 
 const BACKGROUND_GRADIENT_ONE = '#3a405e';
@@ -10,7 +12,7 @@ const StyledHeader = styled.header`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0 3;
+  padding: 0 2;
   height: ${th.size(4)};
 
   font-family: ${th.font('cursive')};
@@ -55,12 +57,25 @@ const StyledHeader = styled.header`
 export const SiteHeader = () => {
   return (
     <StyledHeader>
-      <x.div display="flex" alignItems="center" ml={2}>
-        <BouldrIcon fontSize="4xl" />
-        <x.div fontSize={{ xs: '3xl', md: '4xl' }} ml={4}>
-          Bouldr
-        </x.div>
-      </x.div>
+      <Link href="/" passHref>
+        <x.a
+          display="flex"
+          alignItems="center"
+          padding={1}
+          ml={2}
+          textDecoration="none"
+          color="text"
+          outline="none"
+          ring={{ focus: 3 }}
+          ringColor={{ focus: 'primary-a40' }}
+          borderRadius
+        >
+          <BouldrIcon fontSize="4xl" />
+          <x.div fontSize={{ xs: '3xl', md: '4xl' }} ml={4}>
+            Bouldr
+          </x.div>
+        </x.a>
+      </Link>
     </StyledHeader>
   );
 };

@@ -1,4 +1,5 @@
-import { SpaceProps, x } from '@xstyled/styled-components';
+import { x } from '@xstyled/styled-components';
+import { SpaceProps } from '@xstyled/system';
 import React from 'react';
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
@@ -11,16 +12,14 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <x.button
         color="text"
-        backgroundColor="transparent"
-        hoverBackgroundColor="text-a10"
+        backgroundColor={{ _: 'transparent', hover: 'text-a10', disabled: 'transparent' }}
         border="none"
         borderRadius={10}
-        focusRing={3}
+        ring={{ focus: 3 }}
+        ringColor={{ focus: 'primary-a40' }}
         m={0}
-        focusRingColor="primary-a40"
-        focusOutline="none"
-        disabledOpacity={0.5}
-        disabledBackgroundColor="transparent"
+        outline={{ focus: 'none' }}
+        opacity={{ disabled: 0.5 }}
         {...rest}
         ref={ref}
       >

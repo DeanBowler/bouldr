@@ -35,9 +35,9 @@ const theme: Partial<AppTheme> = {
   ...defaultTheme,
   colors: {
     ...generateHexAlphaVariants({ primary: hslToRgb('hsl(140, 50%, 50%)') }),
+    ...generateHexAlphaVariants({ secondary: hslToRgb('hsl(290, 65%, 55%)') }),
     ...generateHexAlphaVariants({ text: hslToRgb('hsl(180, 8%, 92%)') }),
     background: 'hsl(235deg 10% 20%)',
-    secondary: 'hsl(290, 65%, 55%)',
     white: 'hsl(180deg 10% 99%)',
     black: '#333333',
   },

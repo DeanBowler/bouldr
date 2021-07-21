@@ -27,8 +27,8 @@ export const StyledChildren = ({
   return <>{styledChildren}</>;
 };
 
-const Spaced: React.FunctionComponent<StyledChildrenProps & SpaceProps> = styled(StyledChildren)(
-  space
-);
+const Spaced = styled(StyledChildren)(space) as React.FunctionComponent<
+  StyledChildrenProps & SpaceProps
+>;
 
 export default Spaced;
