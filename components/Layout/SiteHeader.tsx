@@ -1,10 +1,12 @@
 import { gradientShift } from '@/styled/keyframes';
 import styled, { th, x } from '@xstyled/styled-components';
+import { BouldrIcon } from '../icons/BouldrIcon';
 
 const BACKGROUND_GRADIENT_ONE = '#3a405e';
 const BACKGROUND_GRADIENT_TWO = '#664364';
 
 const StyledHeader = styled.header`
+  user-select: none;
   position: relative;
   display: flex;
   align-items: center;
@@ -53,8 +55,11 @@ const StyledHeader = styled.header`
 export const SiteHeader = () => {
   return (
     <StyledHeader>
-      <x.div fontSize={{ xs: '3xl', md: '4xl' }} ml={2}>
-        Bouldr
+      <x.div display="flex" alignItems="center" ml={2}>
+        <BouldrIcon fontSize="4xl" />
+        <x.div fontSize={{ xs: '3xl', md: '4xl' }} ml={4}>
+          Bouldr
+        </x.div>
       </x.div>
     </StyledHeader>
   );
