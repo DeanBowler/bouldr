@@ -82,7 +82,7 @@ export function CapacityHeat({ location, className }: CapacityCardProps) {
     [data]
   );
 
-  const hoverTimeout = useRef<number>();
+  const hoverTimeout = useRef<ReturnType<typeof setTimeout>>();
   const handleCellMouseOver = useCallback(
     (e: React.MouseEvent<SVGRectElement>, day: number, hour: number) => {
       if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
